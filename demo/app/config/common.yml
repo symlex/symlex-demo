@@ -1,0 +1,78 @@
+imports:
+    - { resource: const.yml }
+    - { resource: twig.yml }
+    - { resource: mailer.yml }
+    - { resource: forms.yml }
+    - { resource: models.yml }
+
+services:
+    log.handler:
+        class: Monolog\Handler\ErrorLogHandler
+
+    log:
+        class: Monolog\Logger
+        arguments:
+            - "log"
+        calls:
+            - [ pushHandler, [ "@log.handler" ] ]
+
+    redis:
+        class: Redis
+        calls:
+            - [ 'connect', [ '%redis.host%', '%redis.port%' ] ]
+
+    captcha.builder:
+        class: Gregwar\Captcha\CaptchaBuilder
+
+    cache:
+        class: Symfony\Component\Cache\Simple\RedisCache
+        arguments:
+            - "@redis"
+
+    db.driver:
+        class: Doctrine\DBAL\Driver\PDOMySql\Driver
+
+    db:
+        class: Doctrine\DBAL\Connection
+        arguments:
+            - "%db.options%"
+            - "@db.driver"
+
+    yaml_loader:
+        class: Symfony\Component\Translation\Loader\YamlFileLoader
+
+    array_loader:
+        class: Symfony\Component\Translation\Loader\ArrayLoader
+
+    translator:
+        class: Symfony\Component\Translation\Translator
+        arguments: [ "en", null, '%app.cache_path%/translator', "%app.debug%" ]
+        calls:
+            - [ addLoader, [ "yaml", "@yaml_loader" ] ]
+            - [ addLoader, [ "array", "@array_loader" ]]
+            - [ addResource, [ "yaml", "%app.path%/l10n/de.yml", "de" ] ]
+            - [ addResource, [ "yaml", "%app.path%/l10n/en.yml", "en" ] ]
+
+    dao.factory:
+        class: Doctrine\ActiveRecord\Dao\Factory
+        arguments:
+            - "@db"
+        calls:
+            - [ setFactoryNamespace, [ 'App\Dao' ] ]
+            - [ setFactoryPostfix, [ 'Dao' ] ]
+
+    service.token_generator:
+        class: App\Service\TokenGenerator
+
+    service.mail:
+        class: App\Service\Mail
+        shared: false
+        arguments:
+            - "@mailer"
+            - "@twig"
+            - "@service.token_generator"
+            - { "%app.email%": "%app.name%" }
+
+    service.captcha:
+        class: App\Service\Captcha
+        arguments: [ "@cache", "@captcha.builder", "@service.token_generator" ]

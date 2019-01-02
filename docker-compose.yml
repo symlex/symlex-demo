@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  symlex-nginx:
+    image: symlex/nginx:1.14
+    build:
+      context: ./
+      dockerfile: ./docker/nginx/Dockerfile
+    depends_on:
+      - symlex-demo
+#    ports:
+#      - "8089:80"
+
+  symlex-demo:
+    image: symlex/demo:4.2.6
+    build:
+      context: ./
+      dockerfile: ./docker/demo/Dockerfile
+    depends_on:
+      - symlex-mysql
+      - symlex-redis
+
+  symlex-redis:
+    image: redis:3-alpine
+
+  symlex-mysql:
+    image: symlex/mysql:5.7
+    build:
+      context: ./
+      dockerfile: ./docker/mysql/Dockerfile
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512

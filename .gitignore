@@ -1,0 +1,10 @@
+.idea
+*~
+.goutputstream*
+.c9revisions
+.settings
+.swp
+.tmp
+*.local.yml
+*.override.yml
+composer.lock

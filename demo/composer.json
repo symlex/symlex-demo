@@ -1,0 +1,73 @@
+{
+    "name": "symlex/symlex",
+    "description": "A lean framework stack for agile Web development based on Symfony and Vuetify",
+    "type": "project",
+    "keywords": [
+        "symfony",
+        "framework",
+        "vuejs",
+        "webpack",
+        "dependency injection",
+        "performance",
+        "micro-framework",
+        "rest"
+    ],
+    "homepage": "https://symlex.org/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Mayer",
+            "email": "michael@liquidbytes.net",
+            "homepage": "https://liquidbytes.net/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "ext-pdo_mysql": "*",
+        "symlex/symlex-core": "^4.1",
+        "symlex/input-validation": "^4.2",
+        "symlex/doctrine-active-record": "^4.3",
+        "doctrine/dbal": "^2.8",
+        "doctrine/migrations": "^1.1",
+        "phing/phing": "^2.15",
+        "monolog/monolog": "^1.0",
+        "swiftmailer/swiftmailer": "^5.0",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "gregwar/captcha": "1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0",
+        "lastzero/test-tools": "^4.0",
+        "codeception/codeception": "^2.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "config": {
+      "bin-dir": "bin/"
+    },
+    "scripts": {
+        "post-composer-scripts": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "app/clearcache",
+            "composer dumpautoload -o"
+        ],
+        "post-install-cmd": [
+            "@post-composer-scripts"
+        ],
+        "post-update-cmd": [
+            "@post-composer-scripts"
+        ]
+    },
+    "extra": {
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml",
+            "dist-file": "app/config/parameters.dist.yml"
+        }
+    }
+}
