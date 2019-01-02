@@ -9,4 +9,5 @@ services:
   - docker
 
 script:
+  - scripts/docker-login.sh
   - make composer js images push
