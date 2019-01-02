@@ -1,4 +1,9 @@
+language: php
+
 sudo: required
+
+php:
+  - 7.3
 
 services:
   - docker
