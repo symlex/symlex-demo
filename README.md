@@ -1,6 +1,7 @@
-# demo.symlex.org
+# [demo.symlex.org](https://demo.symlex.org/)
 
-[![License](https://poser.pugx.org/symlex/symlex-demo/license.svg)](https://packagist.org/packages/symlex/symlex-demo)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/symlex/symlex-demo.png?branch=master)](https://travis-ci.org/symlex/symlex-demo)
 [![Documentation](https://readthedocs.org/projects/symlex-docs/badge/?version=latest&style=flat)](https://docs.symlex.org/en/latest/)
 
 Our framework documentation can be found on [docs.symlex.org](https://docs.symlex.org/en/latest/).
