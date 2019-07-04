@@ -6,7 +6,7 @@ composer:
 js:
 	(cd demo &&	bin/phing build-js)
 docker-login:
-	bin/docker-login.sh
+	scripts/docker-login.sh
 docker-build:
 	docker-compose build
 docker-push:
