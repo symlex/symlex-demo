@@ -29,36 +29,10 @@ http:
       numWorkers: 4
 
       # maximum jobs per worker, 0 - unlimited.
-      maxJobs:  0
+      maxJobs:  1000
 
       # for how long worker is allowed to be bootstrapped.
       allocateTimeout: 60
 
       # amount of time given to worker to gracefully destruct itself.
       destroyTimeout:  1800
-
-# Additional HTTP headers and CORS control.
-headers:
-  # Middleware to handle CORS requests, https://www.w3.org/TR/cors/
-  cors:
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
-    allowedOrigin: "*"
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
-    allowedHeaders: "*"
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
-    allowedMethods: "GET,POST,PUT,DELETE,OPTIONS,PATCH"
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
-    allowCredentials: true
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers
-    exposedHeaders: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
-
-    # Max allowed age in seconds
-    maxAge: 600
-
-  # Automatically add headers to every response.
-  response:
-    "X-Powered-By": "Symlex"

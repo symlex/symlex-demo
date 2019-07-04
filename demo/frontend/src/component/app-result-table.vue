@@ -4,7 +4,7 @@
                 :headers="headers"
                 :items="rows"
                 :total-items="resultTotal"
-                class="elevation-1"
+                class="elevation-0"
                 :pagination.sync="pagination"
                 item-key="userId"
         >
@@ -200,9 +200,3 @@
         },
     };
 </script>
-
-<style scoped>
-    h1 {
-        font-weight: bold;
-    }
-</style>
