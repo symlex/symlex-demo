@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-alpine
+FROM php:7.3-cli-alpine
 
 # Install dev dependencies
 RUN apk update \
@@ -31,9 +31,10 @@ RUN apk update \
         wget \
         bash
 
-# Upgrade NPM & Yarn
+# Install and configure NodeJS Package Manager (npm)
+ENV NODE_ENV production
 RUN npm install -g npm
-RUN npm install -g yarn
+RUN npm config set cache ~/.cache/npm
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
@@ -57,13 +58,21 @@ RUN pecl channel-update pecl.php.net \
 
 COPY ./demo/ /var/www/html
 
+WORKDIR /var/www/html
+
 RUN mkdir -p \
         /var/www/html/bin \
         /var/www/html/vendor \
         /var/www/html/storage
 
-RUN composer install --no-interaction
-
 RUN chown -R www-data:www-data /var/www/html/storage
 
-WORKDIR /var/www/html
+RUN env COMPOSER_MEMORY_LIMIT=-1 composer update --no-interaction
+
+RUN bin/phing build-js
+
+RUN bin/rr get
+
+EXPOSE 8083
+
+CMD ./rr serve

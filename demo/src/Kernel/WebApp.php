@@ -2,7 +2,10 @@
 
 namespace App\Kernel;
 
+use Exception;
 use DIMicroKernel\Kernel;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Michael Mayer <michael@liquidbytes.net>
@@ -22,6 +25,27 @@ class WebApp extends Kernel
         if ($this->debug) {
             ini_set('display_errors', 1);
         }
+    }
+
+    /**
+     * Runs the web app and returns response object
+     *
+     * @param Request $request The request object
+     *
+     * @throws Exception
+     * @return Response
+     */
+    public function handle(Request $request)
+    {
+        return $this->getApplication()->handle($request);
+    }
+
+    /**
+     * Resets application / container state
+     */
+    public function reboot() {
+        $this->container = null;
+        $this->appInitialized = false;
     }
 
     public function getUrlPrefix($urlPrefixPostfix = ''): string
@@ -46,8 +70,5 @@ class WebApp extends Kernel
 
         // All other requests are routed to a default controller action (client-side routing e.g. with Vue.js)
         $container->get('router.twig_default')->route($this->getUrlPrefix(), 'controller.web.index', 'index');
-
-        // Uncomment the following line to enable server-side routing
-        // $container->get('router.twig')->route($this->getUrlPrefix(), 'controller.web.');
     }
 }

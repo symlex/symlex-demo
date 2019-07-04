@@ -1,0 +1,64 @@
+static:
+  dir:   "web"
+  forbid: [".php", ".htaccess"]
+
+http:
+  address: 0.0.0.0:8083
+
+  # max POST request size, including file uploads in MB.
+  maxRequestSize: 200
+
+  # list of file extensions which are forbidden for uploading.
+  uploads:
+    forbid: [".php", ".exe", ".bat"]
+
+  # cidr blocks which can set ip using X-Real-Ip or X-Forwarded-For
+  trustedSubnets: ["10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "::1/128", "fc00::/7", "fe80::/10"]
+
+  # http worker pool configuration.
+  workers:
+    # php worker command.
+    command:  "php app/worker.php pipes"
+
+    # connection method (pipes, tcp://:9000, unix://socket.unix). default "pipes"
+    relay:    "pipes"
+
+    # worker pool configuration.
+    pool:
+      # number of workers to be serving.
+      numWorkers: 4
+
+      # maximum jobs per worker, 0 - unlimited.
+      maxJobs:  0
+
+      # for how long worker is allowed to be bootstrapped.
+      allocateTimeout: 60
+
+      # amount of time given to worker to gracefully destruct itself.
+      destroyTimeout:  1800
+
+# Additional HTTP headers and CORS control.
+headers:
+  # Middleware to handle CORS requests, https://www.w3.org/TR/cors/
+  cors:
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+    allowedOrigin: "*"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
+    allowedHeaders: "*"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
+    allowedMethods: "GET,POST,PUT,DELETE,OPTIONS,PATCH"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
+    allowCredentials: true
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers
+    exposedHeaders: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+
+    # Max allowed age in seconds
+    maxAge: 600
+
+  # Automatically add headers to every response.
+  response:
+    "X-Powered-By": "Symlex"

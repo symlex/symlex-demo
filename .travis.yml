@@ -10,4 +10,4 @@ services:
 
 script:
   - scripts/docker-login.sh
-  - make composer js images push
+  - make deploy-demo

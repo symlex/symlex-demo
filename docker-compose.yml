@@ -1,21 +1,13 @@
 version: '3.3'
 
 services:
-  symlex-nginx:
-    image: symlex/nginx:1.14
-    build:
-      context: ./
-      dockerfile: ./docker/nginx/Dockerfile
-    depends_on:
-      - symlex-demo
-#    ports:
-#      - "8089:80"
-
   symlex-demo:
-    image: symlex/demo:4.2.6
+    image: symlex/demo:4.3.0
     build:
       context: ./
       dockerfile: ./docker/demo/Dockerfile
+    ports:
+      - "8083:8083"
     depends_on:
       - symlex-mysql
       - symlex-redis
