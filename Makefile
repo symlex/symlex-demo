@@ -1,11 +1,13 @@
 all: build images push
 build: composer js
-deploy-demo: build-demo push-demo
+deploy-demo: docker-login docker-build docker-push
 composer:
 	(cd demo &&	composer update)
 js:
 	(cd demo &&	bin/phing build-js)
-images:
+docker-login:
+	bin/docker-login.php
+docker-build:
 	docker-compose build
-push:
+docker-push:
 	docker-compose push

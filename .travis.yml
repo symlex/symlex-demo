@@ -9,5 +9,4 @@ services:
   - docker
 
 script:
-  - scripts/docker-login.sh
   - make deploy-demo
