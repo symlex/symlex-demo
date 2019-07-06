@@ -1,6 +1,6 @@
 parameters:
-    app.name: 'Symlex'
-    app.version: '4.2'
+    app.name: 'Symlex Demo'
+    app.version: '4.3'
     app.url: 'https://demo.symlex.org/'
     app.email: hello@symlex.org
     app.locale: en

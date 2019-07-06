@@ -3,7 +3,7 @@
         <v-toolbar dark color="grey darken-2" class="hidden-lg-and-up" @click.stop="showNavigation()">
             <v-toolbar-side-icon></v-toolbar-side-icon>
 
-            <v-toolbar-title>Symlex</v-toolbar-title>
+            <v-toolbar-title>Symlex Demo</v-toolbar-title>
 
             <v-spacer></v-spacer>
         </v-toolbar>
