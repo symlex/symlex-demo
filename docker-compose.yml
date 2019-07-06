@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   symlex-demo:
-    image: symlex/demo:4.3.0
+    image: symlex/demo:latest
     build:
       context: ./
       dockerfile: ./docker/demo/Dockerfile
